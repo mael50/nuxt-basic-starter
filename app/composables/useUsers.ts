@@ -1,6 +1,7 @@
 interface User {
   id: number
   email: string
+  name: string
   isAdmin: boolean
   createdAt: string
 }
@@ -8,12 +9,14 @@ interface User {
 interface CreateUserPayload {
   email: string
   password: string
+  name: string
   isAdmin?: boolean
 }
 
 interface UpdateUserPayload {
   email?: string
   isAdmin?: boolean
+  name?: string
 }
 
 export const useUsers = () => {

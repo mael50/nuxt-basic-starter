@@ -1,4 +1,4 @@
-export type AuthUser = { id: number; email: string; isAdmin: boolean }
+export type AuthUser = { id: number; email: string; isAdmin: boolean, avatar: string, name: string, provider: string }
 
 export function useAuthUser() {
   return useState<AuthUser | null>('auth:user', () => null)

@@ -66,6 +66,29 @@
                     >
                         {{ pending ? 'Création...' : 'Créer mon compte' }}
                     </UButton>
+
+                    <!-- Séparateur -->
+                    <div class="relative my-6">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300 dark:border-gray-700" />
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white dark:bg-gray-900 text-gray-500">ou</span>
+                        </div>
+                    </div>
+
+                    <!-- Connexion avec Google -->
+                    <UButton
+                        @click="loginWithGoogle"
+                        :loading="googlePending"
+                        :disabled="googlePending"
+                        size="lg"
+                        variant="outline"
+                        class="w-full"
+                        icon="i-heroicons-globe-alt"
+                    >
+                        {{ googlePending ? 'Redirection...' : 'Continuer avec Google' }}
+                    </UButton>
                 </form>
             </UCard>
 
@@ -96,6 +119,7 @@ definePageMeta({
 const email = ref('')
 const password = ref('')
 const pending = ref(false)
+const googlePending = ref(false)
 const error = ref('')
 
 async function onSubmit() {
@@ -108,6 +132,17 @@ async function onSubmit() {
         error.value = e?.data?.statusMessage || 'Erreur d\'inscription'
     } finally {
         pending.value = false
+    }
+}
+
+async function loginWithGoogle() {
+    googlePending.value = true
+    try {
+        // Rediriger vers l'endpoint Google OAuth
+        await navigateTo('/api/auth/google', { external: true })
+    } catch (e: any) {
+        error.value = 'Erreur lors de la connexion avec Google'
+        googlePending.value = false
     }
 }
 </script>
