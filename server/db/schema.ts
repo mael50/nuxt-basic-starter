@@ -4,7 +4,11 @@ import { sql, relations } from 'drizzle-orm'
 export const users = mysqlTable('users', {
   id: int('id').autoincrement().primaryKey(),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  passwordHash: varchar('password_hash', { length: 255 }),
+  googleId: varchar('google_id', { length: 255 }),
+  name: varchar('name', { length: 255 }),
+  avatar: varchar('avatar', { length: 500 }),
+  provider: varchar('provider', { length: 50 }).notNull().default('local'), // 'local' ou 'google'
   isAdmin: boolean('is_admin').notNull().default(false),
   createdAt: timestamp('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at').notNull().default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`),
